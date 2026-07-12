@@ -297,6 +297,15 @@
   .history-empty p{color:var(--ink-dim);font-size:0.95rem;}
   .history-empty p.small{margin-top:10px;font-size:0.82rem;color:#867e6e;}
 
+  /* ---------- members ---------- */
+  .members-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:8px;}
+  .member-card{
+    border:1px solid var(--line);padding:28px 24px;
+    text-align:center;
+  }
+  .member-card .role{color:var(--gold);font-size:0.78rem;letter-spacing:0.15em;margin-bottom:12px;}
+  .member-card .name{color:var(--ink);font-size:1.08rem;letter-spacing:0.1em;}
+
   /* ---------- request ---------- */
   .request-grid{display:grid;grid-template-columns:1fr;gap:18px;margin-top:8px;}
   .request-item{
@@ -359,6 +368,7 @@
     section{padding:80px 22px;}
     .schedule-card{flex-direction:column;}
     .schedule-date{border-right:none;border-bottom:1px solid var(--line);padding-right:0;padding-bottom:16px;width:100%;}
+    .members-grid{grid-template-columns:1fr;}
   }
 </style>
 </head>
@@ -372,6 +382,7 @@
     <nav class="links" id="navLinks">
       <a href="#philosophy">理念</a>
       <a href="#purpose">活動目的</a>
+      <a href="#members">メンバー紹介</a>
       <a href="#schedule">活動予定</a>
       <a href="#history">活動履歴</a>
       <a href="#request">演奏依頼</a>
@@ -445,6 +456,30 @@
   </div>
 
   <div class="area-note">活動地域：神奈川県横浜市を中心とし、必要に応じて全国各地で活動する。</div>
+</section>
+
+<section id="members">
+  <span class="eyebrow">MEMBERS</span>
+  <h2 class="title" style="margin-bottom:44px;">メンバー紹介</h2>
+
+  <div class="members-grid">
+    <div class="member-card">
+      <div class="role">座長</div>
+      <div class="name">柴田 康弘</div>
+    </div>
+    <div class="member-card">
+      <div class="role">副座長</div>
+      <div class="name">細井 健一</div>
+    </div>
+    <div class="member-card">
+      <div class="role">副座長</div>
+      <div class="name">金子 和正</div>
+    </div>
+    <div class="member-card">
+      <div class="role">会計</div>
+      <div class="name">後藤 理乃</div>
+    </div>
+  </div>
 </section>
 
 <section id="schedule">
