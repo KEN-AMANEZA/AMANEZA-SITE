@@ -292,18 +292,9 @@ section{
   box-shadow:0 0 30px rgba(212,175,55,0.12);
   transform:translateY(-4px);
 }
-.member-card .role{font-family:"Cinzel",serif;color:var(--gold);font-size:0.72rem;letter-spacing:0.18em;margin-bottom:12px;}
+.member-card .role{font-family:"Noto Serif JP",serif;color:var(--gold);font-size:0.85rem;letter-spacing:0.18em;margin-bottom:12px;}
 .member-card .name{color:var(--white);font-size:1.08rem;letter-spacing:0.12em;}
 
-/* ---------- repertoire (placeholder) ---------- */
-.repertoire-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-.repertoire-card{
-  border:1px solid var(--line);padding:34px 18px;text-align:center;
-  color:var(--ink-dim);font-size:0.85rem;letter-spacing:0.05em;
-  transition:border-color .4s, background .4s;
-}
-.repertoire-card:hover{border-color:var(--gold-dim);background:rgba(212,175,55,0.03);}
-.repertoire-card .mark{color:var(--gold);font-size:1.3rem;margin-bottom:12px;display:block;}
 .section-note{text-align:center;color:var(--ink-dim);font-size:0.82rem;margin-top:30px;opacity:0.75;}
 
 /* ---------- schedule ---------- */
@@ -441,7 +432,6 @@ nav.links a:active{opacity:0.6;}
   .menu-toggle{display:block;}
   section{padding:88px 20px;}
   .members-grid{grid-template-columns:1fr;}
-  .repertoire-grid{grid-template-columns:1fr 1fr;}
   .gallery-grid{grid-template-columns:1fr 1fr;}
   .schedule-card{flex-direction:column;}
   .schedule-date{width:100%;border-right:none;border-bottom:1px solid var(--line);}
@@ -449,7 +439,6 @@ nav.links a:active{opacity:0.6;}
   .greeting-body{text-align:center;}
 }
 @media (max-width:420px){
-  .repertoire-grid{grid-template-columns:1fr;}
   .gallery-grid{grid-template-columns:1fr;}
 }
 
@@ -479,7 +468,6 @@ nav.links a:active{opacity:0.6;}
       <a href="#about">天音座について</a>
       <a href="#greeting">座長挨拶</a>
       <a href="#members">メンバー紹介</a>
-      <a href="#repertoire">演目</a>
       <a href="#schedule">活動予定</a>
       <a href="#gallery">ギャラリー</a>
       <a href="#video">動画</a>
@@ -577,34 +565,22 @@ nav.links a:active{opacity:0.6;}
 
   <div class="members-grid" style="margin-top:50px;">
     <div class="member-card">
-      <div class="role en">CHAIRMAN<span class="jp-tag">座長</span></div>
+      <div class="role">座長</div>
       <div class="name">柴田 康弘</div>
     </div>
     <div class="member-card">
-      <div class="role en">VICE CHAIRMAN<span class="jp-tag">副座長</span></div>
+      <div class="role">副座長</div>
       <div class="name">細井 健一</div>
     </div>
     <div class="member-card">
-      <div class="role en">VICE CHAIRMAN<span class="jp-tag">副座長</span></div>
+      <div class="role">副座長</div>
       <div class="name">金子 和正</div>
     </div>
     <div class="member-card">
-      <div class="role en">TREASURER<span class="jp-tag">会計</span></div>
+      <div class="role">会計</div>
       <div class="name">後藤 理乃</div>
     </div>
   </div>
-</section>
-
-<section id="repertoire" class="reveal">
-  <span class="eyebrow en">REPERTOIRE</span>
-  <h2 class="title">演目</h2>
-
-  <div class="repertoire-grid" style="margin-top:50px;">
-    <div class="repertoire-card"><span class="mark">音</span>準備中</div>
-    <div class="repertoire-card"><span class="mark">音</span>準備中</div>
-    <div class="repertoire-card"><span class="mark">音</span>準備中</div>
-  </div>
-  <div class="section-note">演目情報は準備中です。決まり次第、随時こちらに掲載いたします。</div>
 </section>
 
 <section id="schedule" class="reveal">
@@ -711,7 +687,7 @@ nav.links a:active{opacity:0.6;}
 <footer>
   <div class="fmark en">AMANEZA</div>
   <div>太鼓和奏集団　天音座</div>
-  <p style="margin-top:6px;">設立 2026年6月</p>
+  <p style="margin-top:6px;">設立 2026年6月／神奈川県横浜市</p>
 </footer>
 
 <script>
