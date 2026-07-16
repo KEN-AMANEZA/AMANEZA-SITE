@@ -222,10 +222,22 @@ section{
 
 /* ---------- about ---------- */
 .about-lead{text-align:center;color:var(--ink-dim);font-size:0.98rem;max-width:640px;margin:0 auto 50px;}
-.about-block{margin-bottom:38px;}
+.about-block{margin-bottom:44px;}
+.about-eyebrow{
+  display:block;
+  font-family:"Cinzel",serif;font-weight:600;
+  font-size:0.7rem;letter-spacing:0.35em;
+  color:var(--gold);text-align:center;margin-bottom:10px;
+}
 .about-block h3{
-  font-family:"Cinzel",serif;font-size:0.82rem;letter-spacing:0.2em;
-  color:var(--gold-light);margin-bottom:14px;text-align:center;
+  font-size:1.15rem;font-weight:normal;
+  text-align:center;color:var(--white);
+  letter-spacing:0.06em;position:relative;
+  margin-bottom:22px;
+}
+.about-block h3::after{
+  content:"";display:block;width:26px;height:1px;
+  background:var(--gold);margin:14px auto 0;
 }
 .about-block p{color:var(--ink-dim);font-size:0.95rem;text-align:center;}
 .activity-list{list-style:none;max-width:520px;margin:0 auto;}
@@ -515,17 +527,20 @@ nav.links a:active{opacity:0.6;}
   <p class="about-lead">世界は響きで満ちている。風が木々を揺らす音、雨が大地を潤す音、鼓動が命を刻む音。私たちは、その一音に想いを込める。</p>
 
   <div class="about-block">
-    <h3 class="en">PURPOSE<span class="jp-tag">活動目的</span></h3>
+    <span class="about-eyebrow en">PURPOSE</span>
+    <h3>活動目的</h3>
     <p>和太鼓を中心に、篠笛・箏・尺八その他の和楽器を融合した演奏活動を通じ、日本文化の継承及び発展に寄与するとともに、地域社会との交流及び文化振興に貢献することを目的とする。</p>
   </div>
 
   <div class="about-block">
-    <h3 class="en">POLICY<span class="jp-tag">活動方針</span></h3>
+    <span class="about-eyebrow en">POLICY</span>
+    <h3>活動方針</h3>
     <p>礼節・協調性・向上心を大切にし、会員相互が互いを尊重しながら、演奏技術と人間性の向上を目指す。</p>
   </div>
 
   <div class="about-block">
-    <h3 class="en">ACTIVITIES<span class="jp-tag">主な活動</span></h3>
+    <span class="about-eyebrow en">ACTIVITIES</span>
+    <h3>主な活動</h3>
     <ul class="activity-list">
       <li data-n="01">演奏会及び地域イベントへの出演</li>
       <li data-n="02">神社仏閣等での奉納演奏</li>
