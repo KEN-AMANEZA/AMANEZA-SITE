@@ -24,6 +24,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
+html.opening-lock, html.opening-lock body{overflow:hidden;height:100%;}
 body{
   background:var(--bg);
   color:var(--ink);
@@ -49,10 +50,10 @@ a{color:var(--gold-light);text-decoration:none;}
 /* ---------- loading screen ---------- */
 #loader{
   position:fixed;inset:0;z-index:200;
-  background:#050505;
+  background:rgba(5,5,5,0.92);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:14px;
-  transition:opacity 1s ease, visibility 1s ease;
+  transition:opacity 2.6s ease, visibility 2.6s ease;
 }
 #loader.hide{opacity:0;visibility:hidden;pointer-events:none;}
 #loader canvas{position:absolute;inset:0;width:100%;height:100%;}
@@ -128,6 +129,12 @@ header.nav{
   background:rgba(5,5,5,0.72);
   backdrop-filter:blur(10px);
   border-bottom:1px solid var(--line);
+  opacity:0;transform:translateY(-12px);
+  animation:navIn 1s ease 5.8s forwards;
+}
+@keyframes navIn{
+  0%{opacity:0;transform:translateY(-12px);}
+  100%{opacity:1;transform:translateY(0);}
 }
 .nav-inner{
   max-width:1120px;margin:0 auto;
@@ -160,19 +167,30 @@ nav.links a:hover::after{width:100%;}
   text-align:center;
   padding:120px 20px 80px;
   overflow:hidden;
+  filter:brightness(0.22) blur(15px);
+  transform:scale(1.045);
+  animation:heroReveal 2.3s cubic-bezier(.25,.4,.2,1) 4.2s forwards;
+}
+@keyframes heroReveal{
+  0%{filter:brightness(0.22) blur(15px);transform:scale(1.045);}
+  100%{filter:brightness(1) blur(0);transform:scale(1);}
 }
 .hero-content{position:relative;z-index:2;}
 .hero-group{
   font-size:clamp(1.1rem,2.6vw,1.5rem);letter-spacing:0.38em;color:var(--gold-light);
   margin-bottom:16px;
-  opacity:0;animation:heroFade 1.4s ease 0s forwards;
+  opacity:0;animation:heroFade 1.4s ease 4.4s forwards;
 }
 .hero-logo{
   width:min(360px,78vw);height:auto;margin:0 auto 28px;
-  opacity:0;transform:translateY(18px) scale(0.96);
+  opacity:0;
   filter:drop-shadow(0 0 26px rgba(212,175,55,0.28));
-  animation:heroFade 1.4s ease 0.2s forwards;
+  animation:heroLogoIn 1.8s ease 5.2s forwards;
   transition:filter .6s ease, transform .6s ease;
+}
+@keyframes heroLogoIn{
+  0%{opacity:0;}
+  100%{opacity:1;}
 }
 .hero-logo:hover{
   filter:drop-shadow(0 0 40px rgba(212,175,55,0.5));
@@ -181,19 +199,19 @@ nav.links a:hover::after{width:100%;}
 .hero-en{
   font-size:0.78rem;letter-spacing:0.5em;color:var(--gold-light);
   text-transform:uppercase;margin-bottom:18px;
-  opacity:0;animation:heroFade 1.4s ease 0.6s forwards;
+  opacity:0;animation:heroFade 1.4s ease 4.7s forwards;
 }
 .hero-sub{
   font-size:clamp(1.5rem,4vw,2.3rem);
   color:var(--white);
   letter-spacing:0.12em;
   margin-bottom:18px;
-  opacity:0;animation:heroFade 1.4s ease 1s forwards;
+  opacity:0;animation:heroFade 1.4s ease 5s forwards;
   text-shadow:0 0 30px rgba(212,175,55,0.25);
 }
 .hero-tagline{
   font-size:0.95rem;color:var(--ink-dim);letter-spacing:0.08em;
-  opacity:0;animation:heroFade 1.4s ease 1.4s forwards;
+  opacity:0;animation:heroFade 1.4s ease 5.3s forwards;
 }
 @keyframes heroFade{
   0%{opacity:0;transform:translateY(16px);}
@@ -202,7 +220,7 @@ nav.links a:hover::after{width:100%;}
 .hero-philosophy{
   max-width:540px;margin:36px auto 0;
   color:var(--white);font-size:0.92rem;line-height:2;
-  opacity:0;animation:heroFade 1.4s ease 1.4s forwards;
+  opacity:0;animation:heroFade 1.4s ease 5.3s forwards;
 }
 .hero-philosophy > p.lead{color:var(--gold-light);letter-spacing:0.05em;margin-bottom:30px;font-size:0.98rem;}
 .hero-philosophy .gold-line{color:var(--gold-light);}
@@ -215,7 +233,7 @@ nav.links a:hover::after{width:100%;}
   position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
   width:1px;height:46px;
   background:linear-gradient(180deg,var(--gold),transparent);
-  opacity:0;animation:heroFade 1.4s ease 1.8s forwards, cueMove 2.4s ease-in-out 3.2s infinite;
+  opacity:0;animation:heroFade 1.4s ease 5.6s forwards, cueMove 2.4s ease-in-out 7s infinite;
 }
 @keyframes cueMove{
   0%,100%{opacity:0.25;}
@@ -477,6 +495,11 @@ nav.links a:active{opacity:0.6;}
   *{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;}
   .reveal{opacity:1;transform:none;filter:none;}
   #loader{display:none;}
+  .hero{filter:none !important;transform:none !important;animation:none !important;}
+  .hero-group,.hero-en,.hero-sub,.hero-tagline,.hero-philosophy,.scroll-cue{opacity:1 !important;transform:none !important;animation:none !important;}
+  .hero-logo{opacity:1 !important;animation:none !important;}
+  header.nav{opacity:1 !important;transform:none !important;animation:none !important;}
+  html.opening-lock, html.opening-lock body{overflow:auto !important;height:auto !important;}
 }
 </style>
 </head>
@@ -876,8 +899,35 @@ nav.links a:active{opacity:0.6;}
     var loader = document.getElementById('loader');
     if(loader) loader.classList.add('hide');
   }
-  window.addEventListener('load', function(){ setTimeout(dismissLoader, 5000); });
-  setTimeout(dismissLoader, 6800);
+
+  function flipOpeningLogo(){
+    var openLogo = document.querySelector('.loader-logo');
+    var heroLogo = document.querySelector('.hero-logo');
+    if(!openLogo || !heroLogo) return;
+    openLogo.style.animation = 'none';
+    openLogo.style.opacity = '1';
+    openLogo.style.transform = 'scale(1)';
+    void openLogo.offsetWidth;
+    var startRect = openLogo.getBoundingClientRect();
+    var endRect = heroLogo.getBoundingClientRect();
+    var dx = (endRect.left + endRect.width/2) - (startRect.left + startRect.width/2);
+    var dy = (endRect.top + endRect.height/2) - (startRect.top + startRect.height/2);
+    var scale = endRect.width / startRect.width;
+    openLogo.style.transition = 'transform 2s cubic-bezier(.45,.05,.15,1), opacity 1.6s ease 0.3s';
+    requestAnimationFrame(function(){
+      openLogo.style.transform = 'translate('+dx+'px,'+dy+'px) scale('+scale+')';
+      openLogo.style.opacity = '0';
+    });
+  }
+
+  if(!reduceMotion){
+    document.documentElement.classList.add('opening-lock');
+    setTimeout(dismissLoader, 4200);
+    setTimeout(flipOpeningLogo, 5000);
+    setTimeout(function(){
+      document.documentElement.classList.remove('opening-lock');
+    }, 7200);
+  }
 
   var toggle = document.getElementById('menuToggle');
   var links = document.getElementById('navLinks');
