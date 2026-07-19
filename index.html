@@ -392,28 +392,67 @@ footer{
 .fmark{font-family:"Cinzel",serif;color:var(--gold-light);letter-spacing:0.2em;margin-bottom:10px;font-size:0.85rem;}
 
 /* ---------- buttons ---------- */
-.btn-mail{
-  position:relative;overflow:hidden;
-  display:inline-block;
-  border:1px solid var(--gold);
+.btn-request-wrap{text-align:center;margin-top:44px;}
+.cta-note{
+  color:var(--gold-light);font-size:0.85rem;letter-spacing:0.08em;
+  margin-bottom:20px;opacity:0.85;
+}
+.btn-request{
+  position:relative;overflow:hidden;isolation:isolate;
+  display:inline-flex;align-items:center;justify-content:center;gap:12px;
+  padding:19px 52px;
+  font-family:"Noto Serif JP",serif;
+  font-size:1.05rem;font-weight:500;letter-spacing:0.14em;
   color:var(--gold-light);
-  padding:14px 38px;
-  letter-spacing:0.14em;
-  font-size:0.9rem;
-  transition:color .4s, box-shadow .4s, background .4s;
+  background:linear-gradient(155deg,#171b45 0%,#0e1130 55%,#0a0b22 100%);
+  border:1px solid rgba(212,175,55,0.5);
+  border-radius:8px;
+  cursor:pointer;
+  box-shadow:
+    0 10px 26px rgba(0,0,0,0.55),
+    0 0 0 1px rgba(212,175,55,0.08),
+    0 0 22px rgba(212,175,55,0.22);
+  transition:transform .38s cubic-bezier(.2,.8,.25,1), box-shadow .38s ease, border-color .38s ease;
+  animation:btnBreathe 4.6s ease-in-out infinite;
 }
-.btn-mail:hover{
-  background:var(--gold);color:#0d0a02;
-  box-shadow:0 0 28px rgba(212,175,55,0.5);
+.btn-request::before{
+  content:"";
+  position:absolute;top:0;left:0;width:32%;height:100%;
+  background:linear-gradient(115deg,transparent,rgba(255,246,214,0.4),transparent);
+  transform:translateX(-160%) skewX(-16deg);
+  animation:btnSweep 4.2s ease-in-out infinite;
+  animation-delay:1.4s;
+  pointer-events:none;
 }
-.btn-mail:active{transform:scale(0.97);}
-.btn-mail::before{
-  content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;
-  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.35),transparent);
-  transform:skewX(-20deg);
-  transition:left .7s ease;
+.btn-request-icon{width:15px;height:15px;flex-shrink:0;display:inline-flex;}
+.btn-request-icon svg{width:100%;height:100%;display:block;}
+.btn-request:hover{
+  transform:translateY(-3px);
+  border-color:rgba(234,209,131,0.85);
+  box-shadow:
+    0 14px 30px rgba(0,0,0,0.6),
+    0 0 0 1px rgba(212,175,55,0.15),
+    0 0 34px rgba(212,175,55,0.4);
 }
-.btn-mail:hover::before{left:130%;}
+.btn-request:active{
+  transform:translateY(0) scale(0.98);
+  box-shadow:
+    0 6px 14px rgba(0,0,0,0.55),
+    0 0 18px rgba(212,175,55,0.3);
+}
+@keyframes btnBreathe{
+  0%,100%{
+    box-shadow:0 10px 26px rgba(0,0,0,0.55),0 0 0 1px rgba(212,175,55,0.08),0 0 20px rgba(212,175,55,0.2);
+  }
+  50%{
+    box-shadow:0 10px 26px rgba(0,0,0,0.55),0 0 0 1px rgba(212,175,55,0.12),0 0 32px rgba(212,175,55,0.38);
+  }
+}
+@keyframes btnSweep{
+  0%{transform:translateX(-160%) skewX(-16deg);}
+  16%{transform:translateX(340%) skewX(-16deg);}
+  100%{transform:translateX(340%) skewX(-16deg);}
+}
 
 nav.links a:active{opacity:0.6;}
 
@@ -435,6 +474,7 @@ nav.links a:active{opacity:0.6;}
   .gallery-grid{grid-template-columns:1fr 1fr;}
   .schedule-card{flex-direction:column;}
   .schedule-date{width:100%;border-right:none;border-bottom:1px solid var(--line);}
+  .btn-request{width:100%;max-width:360px;padding:20px 24px;}
 }
 @media (max-width:420px){
   .gallery-grid{grid-template-columns:1fr;}
@@ -449,6 +489,8 @@ nav.links a:active{opacity:0.6;}
   .hero-logo{opacity:1 !important;animation:none !important;}
   header.nav{opacity:1 !important;transform:none !important;animation:none !important;}
   html.opening-lock, html.opening-lock body{overflow:auto !important;height:auto !important;}
+  .btn-request{animation:none !important;}
+  .btn-request::before{display:none;}
 }
 </style>
 </head>
@@ -602,12 +644,7 @@ nav.links a:active{opacity:0.6;}
   <span class="eyebrow en">VIDEO</span>
   <h2 class="title">動画</h2>
 
-  <div class="video-item" style="margin-top:50px;">
-    <h4>2026年7月天音座稽古風景</h4>
-    <div class="video-frame">
-      <iframe src="https://www.youtube.com/embed/mBuLjTLnTCQ" title="2026年7月天音座稽古風景" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
-    </div>
-  </div>
+  <div class="section-note" style="margin-top:50px;">動画は準備中です。撮影次第、随時公開いたします。</div>
 </section>
 
 <section id="contact" class="reveal">
@@ -633,7 +670,13 @@ nav.links a:active{opacity:0.6;}
 
   <div class="cta">
     <p>ご依頼内容（日時・会場・演奏時間の目安等）をメールにてお知らせください。折り返しご連絡いたします。</p>
-    <a class="btn-mail" href="mailto:official.amaneza@gmail.com?subject=演奏依頼について">演奏依頼のメールを送る</a>
+    <div class="btn-request-wrap">
+      <p class="cta-note">祭り・イベント・式典など、演奏のご相談はこちら</p>
+      <a class="btn-request" href="mailto:official.amaneza@gmail.com?subject=演奏依頼について">
+        <span class="btn-request-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        演奏を依頼する
+      </a>
+    </div>
   </div>
 
   <div class="contact-box">
