@@ -276,8 +276,7 @@ section{
 
 /* ---------- greeting ---------- */
 .greeting-wrap{
-  display:flex;gap:44px;align-items:flex-start;flex-wrap:wrap;
-  justify-content:center;
+  display:block;
 }
 .greeting-portrait{
   width:150px;height:150px;border-radius:50%;
@@ -287,7 +286,7 @@ section{
   text-align:center;flex-shrink:0;
   background:radial-gradient(circle,rgba(212,175,55,0.08),transparent 70%);
 }
-.greeting-body{flex:1;min-width:260px;max-width:560px;}
+.greeting-body{max-width:560px;margin:0 auto;text-align:left;}
 .greeting-body p{color:var(--ink-dim);font-size:0.95rem;margin-bottom:16px;text-wrap:pretty;}
 .greeting-sign{
   margin-top:24px;text-align:right;color:var(--gold-light);
@@ -436,8 +435,6 @@ nav.links a:active{opacity:0.6;}
   .gallery-grid{grid-template-columns:1fr 1fr;}
   .schedule-card{flex-direction:column;}
   .schedule-date{width:100%;border-right:none;border-bottom:1px solid var(--line);}
-  .greeting-wrap{flex-direction:column;align-items:center;}
-  .greeting-body{text-align:left;}
 }
 @media (max-width:420px){
   .gallery-grid{grid-template-columns:1fr;}
@@ -559,7 +556,6 @@ nav.links a:active{opacity:0.6;}
       <p>一音一音に想いを込め、一人ひとりを大切にしながら、聴いてくださる方の心に静かな余韻を届けられるよう、これからも真摯に稽古を重ねてまいります。</p>
       <p>発足したばかりの小さな一座ではございますが、皆様に見守っていただきながら、一歩一歩、着実に歩んでまいりたいと存じます。今後ともどうぞよろしくお願いいたします。</p>
       <div class="greeting-sign">
-        <span class="role en">CHAIRMAN</span>
         座長　柴田 康弘
       </div>
     </div>
