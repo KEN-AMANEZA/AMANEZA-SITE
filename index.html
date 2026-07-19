@@ -32,7 +32,7 @@ body{
   line-height:1.9;
   overflow-x:hidden;
 }
-p{text-wrap:pretty;}
+p{text-wrap:pretty;line-break:strict;}
 a{color:var(--gold-light);text-decoration:none;}
 ::selection{background:var(--gold);color:#0a0a05;}
 
@@ -297,29 +297,6 @@ section{
   display:block;color:var(--ink-dim);font-size:0.75rem;letter-spacing:0.15em;margin-bottom:4px;
 }
 
-/* ---------- members ---------- */
-.members-grid{display:flex;flex-direction:column;gap:14px;margin-top:8px;max-width:420px;margin-left:auto;margin-right:auto;}
-.member-card{
-  display:flex;align-items:center;justify-content:space-between;gap:22px;
-  border:1px solid var(--line);padding:18px 26px;
-  background:rgba(212,175,55,0.02);
-  transition:border-color .4s, box-shadow .4s, transform .4s;
-}
-.member-card:hover{
-  border-color:var(--gold-dim);
-  box-shadow:0 0 30px rgba(212,175,55,0.12);
-  transform:translateY(-4px);
-}
-.member-photo{
-  width:64px;height:64px;border-radius:50%;flex-shrink:0;
-  border:1px solid var(--gold-dim);
-  background:radial-gradient(circle,rgba(212,175,55,0.08),transparent 70%);
-  overflow:hidden;
-}
-.member-photo img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
-.member-card .role{font-family:"Noto Serif JP",serif;color:var(--gold);font-size:0.85rem;letter-spacing:0.18em;margin-bottom:6px;}
-.member-card .name{color:var(--white);font-size:1.08rem;letter-spacing:0.12em;}
-
 .section-note{text-align:center;color:var(--ink-dim);font-size:0.82rem;margin-top:30px;opacity:0.75;}
 
 /* ---------- schedule ---------- */
@@ -459,8 +436,8 @@ nav.links a:active{opacity:0.6;}
   .gallery-grid{grid-template-columns:1fr 1fr;}
   .schedule-card{flex-direction:column;}
   .schedule-date{width:100%;border-right:none;border-bottom:1px solid var(--line);}
-  .greeting-wrap{flex-direction:column;align-items:center;text-align:center;}
-  .greeting-body{text-align:center;}
+  .greeting-wrap{flex-direction:column;align-items:center;}
+  .greeting-body{text-align:left;}
 }
 @media (max-width:420px){
   .gallery-grid{grid-template-columns:1fr;}
@@ -501,7 +478,6 @@ nav.links a:active{opacity:0.6;}
     <nav class="links" id="navLinks">
       <a href="#about">天音座について</a>
       <a href="#greeting">座長挨拶</a>
-      <a href="#members">メンバー紹介</a>
       <a href="#schedule">活動予定</a>
       <a href="#gallery">ギャラリー</a>
       <a href="#video">動画</a>
@@ -586,30 +562,6 @@ nav.links a:active{opacity:0.6;}
         <span class="role en">CHAIRMAN</span>
         座長　柴田 康弘
       </div>
-    </div>
-  </div>
-</section>
-
-<section id="members" class="reveal">
-  <span class="eyebrow en">MEMBERS</span>
-  <h2 class="title">メンバー紹介</h2>
-
-  <div class="members-grid" style="margin-top:50px;">
-    <div class="member-card">
-      <div class="name">柴田 康弘</div>
-      <div class="member-photo"></div>
-    </div>
-    <div class="member-card">
-      <div class="name">細井 健一</div>
-      <div class="member-photo"></div>
-    </div>
-    <div class="member-card">
-      <div class="name">金子 和正</div>
-      <div class="member-photo"></div>
-    </div>
-    <div class="member-card">
-      <div class="name">後藤 理乃</div>
-      <div class="member-photo"></div>
     </div>
   </div>
 </section>
