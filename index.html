@@ -51,11 +51,36 @@ a{color:var(--gold-light);text-decoration:none;}
   position:fixed;inset:0;z-index:200;
   background:rgba(5,5,5,0.92);
   pointer-events:none;
-  transition:opacity .5s ease, visibility .5s ease;
+  transition:opacity .6s ease, visibility .6s ease;
 }
 #loader.hide{opacity:0;visibility:hidden;}
 #loader canvas{position:absolute;inset:0;width:100%;height:100%;}
-#opening-canvas{z-index:2;}
+.meteor-shower{position:absolute;inset:0;overflow:hidden;z-index:2;}
+.meteor{
+  position:absolute;
+  border-radius:2px;
+  transform-origin:0 50%;
+  transform:rotate(26deg) translateX(0);
+  opacity:0;
+  background:linear-gradient(90deg, transparent, rgba(197,214,255,0.7) 45%, rgba(255,255,255,0.92) 80%, rgba(234,209,131,0.6));
+  animation-name:meteorFly;
+  animation-timing-function:cubic-bezier(.3,.4,.35,1);
+  animation-fill-mode:forwards;
+}
+@keyframes meteorFly{
+  0%{opacity:0;transform:rotate(26deg) translateX(0);}
+  10%{opacity:1;}
+  78%{opacity:0.85;}
+  100%{opacity:0;transform:rotate(26deg) translateX(135vmax);}
+}
+.meteor.main{box-shadow:0 0 6px 1px rgba(255,255,255,0.3);}
+.meteor.m1{top:8%;left:0%;width:150px;height:2.4px;animation-duration:.85s;animation-delay:.15s;}
+.meteor.m2{top:20%;left:8%;width:130px;height:2.2px;animation-duration:.8s;animation-delay:.35s;}
+.meteor.m3{top:2%;left:15%;width:75px;height:1.2px;animation-duration:.6s;animation-delay:.2s;}
+.meteor.m4{top:28%;left:2%;width:90px;height:1.3px;animation-duration:.65s;animation-delay:.3s;}
+.meteor.m5{top:14%;left:20%;width:65px;height:1.1px;animation-duration:.55s;animation-delay:.45s;}
+.meteor.m6{top:34%;left:12%;width:100px;height:1.4px;animation-duration:.7s;animation-delay:.4s;}
+.meteor.m7{top:0%;left:5%;width:60px;height:1.1px;animation-duration:.55s;animation-delay:.55s;}
 
 /* ---------- background canvas ---------- */
 #bg-canvas{
@@ -130,11 +155,12 @@ html.site-revealed .hero{
 html.site-revealed .hero-group{opacity:1;transform:translateY(0);}
 .hero-logo{
   width:min(360px,78vw);height:auto;margin:0 auto 28px;
-  opacity:0;
+  opacity:0;transform:scale(0.94);
   filter:drop-shadow(0 0 26px rgba(212,175,55,0.28));
-  transition:opacity .45s ease .05s, filter .6s ease, transform .6s ease;
+  transition:opacity .5s ease .05s, transform .5s ease .05s, filter .6s ease;
 }
 html.site-revealed .hero-logo{opacity:1;}
+.hero-logo.settled{transform:scale(1);}
 .hero-logo:hover{
   filter:drop-shadow(0 0 40px rgba(212,175,55,0.5));
   transform:scale(1.03);
@@ -460,7 +486,8 @@ nav.links a:active{opacity:0.6;}
   #loader{display:none;}
   .hero{filter:none !important;transform:none !important;animation:none !important;}
   .hero-group,.hero-en,.hero-sub,.hero-tagline,.hero-philosophy,.scroll-cue{opacity:1 !important;transform:none !important;animation:none !important;}
-  .hero-logo{opacity:1 !important;animation:none !important;}
+  .hero-logo{opacity:1 !important;transform:none !important;animation:none !important;}
+  .meteor-shower{display:none;}
   header.nav{opacity:1 !important;transform:none !important;animation:none !important;}
   .btn-request{animation:none !important;}
   .btn-request::before{display:none;}
@@ -471,7 +498,15 @@ nav.links a:active{opacity:0.6;}
 
 <div id="loader">
   <canvas id="loader-canvas"></canvas>
-  <canvas id="opening-canvas"></canvas>
+  <div class="meteor-shower">
+    <span class="meteor main m1"></span>
+    <span class="meteor main m2"></span>
+    <span class="meteor m3"></span>
+    <span class="meteor m4"></span>
+    <span class="meteor m5"></span>
+    <span class="meteor m6"></span>
+    <span class="meteor m7"></span>
+  </div>
 </div>
 
 <canvas id="bg-canvas"></canvas>
@@ -828,183 +863,28 @@ nav.links a:active{opacity:0.6;}
     }, {passive:true});
   }
 
-  function easeOutCubic(t){ return 1 - Math.pow(1-t, 3); }
-  function easeOutQuint(t){ return 1 - Math.pow(1-t, 5); }
-
   var introRevealed = false;
-  var introCancelled = false;
 
   function revealSite(){
     if(introRevealed) return;
     introRevealed = true;
-    introCancelled = true;
     document.documentElement.classList.add('site-revealed');
+    var heroLogo = document.querySelector('.hero-logo');
+    if(heroLogo) heroLogo.classList.add('settled');
     var loader = document.getElementById('loader');
     if(loader) loader.classList.add('hide');
   }
 
-  function runOpeningSequence(){
-    var openingCanvas = document.getElementById('opening-canvas');
-    var sourceLogo = document.querySelector('.hero-logo');
-    if(!openingCanvas || !sourceLogo) return;
-    var octx = openingCanvas.getContext('2d');
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    var W = openingCanvas.clientWidth, H = openingCanvas.clientHeight;
-    openingCanvas.width = Math.max(1, W*dpr);
-    openingCanvas.height = Math.max(1, H*dpr);
-    octx.setTransform(dpr,0,0,dpr,0,0);
-
-    var logoW = Math.min(150, W*0.3);
-    var ratio = (sourceLogo.naturalWidth && sourceLogo.naturalHeight) ? (sourceLogo.naturalHeight/sourceLogo.naturalWidth) : 1;
-    var logoH = logoW * ratio;
-    var logoCenterX = W/2;
-    var logoCenterY = H*0.42;
-    var logoRect = { left: logoCenterX-logoW/2, top: logoCenterY-logoH/2, width: logoW, height: logoH };
-
-    function samplePoints(){
-      var points = [];
-      var sw = 72, sh = Math.max(1, Math.round(72*ratio));
-      try{
-        var off = document.createElement('canvas');
-        off.width = sw; off.height = sh;
-        var octx2 = off.getContext('2d');
-        octx2.drawImage(sourceLogo, 0, 0, sw, sh);
-        var data = octx2.getImageData(0,0,sw,sh).data;
-        var stride = 2;
-        for(var y=0;y<sh;y+=stride){
-          for(var x=0;x<sw;x+=stride){
-            var idx = (y*sw+x)*4;
-            if(data[idx+3] > 120){ points.push({nx:x/sw, ny:y/sh}); }
-          }
-        }
-      }catch(e){ points = []; }
-      if(points.length < 20){
-        points = [];
-        var ringN = 140;
-        for(var i=0;i<ringN;i++){
-          var ang = (i/ringN)*Math.PI*2;
-          points.push({nx:0.5+Math.cos(ang)*0.42, ny:0.5+Math.sin(ang)*0.42});
-        }
-      }
-      var target = 150;
-      if(points.length > target){
-        for(var s=points.length-1;s>0;s--){
-          var j = Math.floor(Math.random()*(s+1));
-          var tmp = points[s]; points[s]=points[j]; points[j]=tmp;
-        }
-        points = points.slice(0, target);
-      }
-      return points;
-    }
-
-    function beginComet(points){
-      if(introCancelled) return;
-      var startX = -0.18*W, startY = -0.12*H;
-      var endX = logoCenterX, endY = logoCenterY;
-      var cometDuration = 850;
-      var particleDuration = 350;
-      var particleStaggerMax = 120;
-      var holdDuration = 350;
-
-      var startTime = null, phase = 'flight', trail = [], particles = null;
-      var burstStartAbs = null, holdStartAbs = null;
-
-      function frame(ts){
-        if(introCancelled) return;
-        if(startTime===null) startTime = ts;
-        var elapsed = ts - startTime;
-        octx.clearRect(0,0,W,H);
-
-        if(phase==='flight'){
-          var p = Math.min(1, elapsed/cometDuration);
-          var travel = easeOutQuint(p);
-          var cx = startX + (endX-startX)*travel;
-          var cy = startY + (endY-startY)*travel;
-          trail.push({x:cx,y:cy});
-          if(trail.length>16) trail.shift();
-          for(var i=0;i<trail.length;i++){
-            var tp = trail[i], a = i/trail.length, r = 0.6+a*1.8;
-            var grad = octx.createRadialGradient(tp.x,tp.y,0,tp.x,tp.y,r*3);
-            grad.addColorStop(0,'rgba(255,255,255,'+(a*0.85)+')');
-            grad.addColorStop(0.5,'rgba(230,196,110,'+(a*0.35)+')');
-            grad.addColorStop(1,'rgba(212,175,55,0)');
-            octx.beginPath();
-            octx.fillStyle = grad;
-            octx.arc(tp.x,tp.y,r*3,0,Math.PI*2);
-            octx.fill();
-          }
-          var headGrad = octx.createRadialGradient(cx,cy,0,cx,cy,6);
-          headGrad.addColorStop(0,'rgba(255,255,255,0.95)');
-          headGrad.addColorStop(1,'rgba(212,175,55,0)');
-          octx.beginPath();
-          octx.fillStyle = headGrad;
-          octx.arc(cx,cy,6,0,Math.PI*2);
-          octx.fill();
-
-          if(p>=1){
-            phase='burst'; burstStartAbs = ts;
-            particles = points.map(function(pt){
-              return {
-                x: cx+(Math.random()-0.5)*8,
-                y: cy+(Math.random()-0.5)*8,
-                tx: logoRect.left+pt.nx*logoRect.width,
-                ty: logoRect.top+pt.ny*logoRect.height,
-                delay: Math.random()*particleStaggerMax,
-                size: 0.8+Math.random()*1.1
-              };
-            });
-          }
-        } else if(phase==='burst'){
-          var be = ts-burstStartAbs, allArrived = true;
-          for(var k=0;k<particles.length;k++){
-            var pt2 = particles[k], pe = be-pt2.delay, pr;
-            if(pe<=0){ pr=0; allArrived=false; }
-            else{ pr = Math.min(1, pe/particleDuration); if(pr<1) allArrived=false; }
-            var ee = easeOutCubic(pr);
-            var curX = pt2.x+(pt2.tx-pt2.x)*ee;
-            var curY = pt2.y+(pt2.ty-pt2.y)*ee;
-            octx.beginPath();
-            octx.fillStyle = 'rgba(233,210,150,'+(0.35+ee*0.65)+')';
-            octx.arc(curX,curY,pt2.size,0,Math.PI*2);
-            octx.fill();
-          }
-          if(allArrived){ phase='hold'; holdStartAbs = ts; }
-        } else if(phase==='hold'){
-          var he = ts-holdStartAbs;
-          var pulse = 0.75+Math.sin(he/140)*0.15;
-          for(var m=0;m<particles.length;m++){
-            var pt3 = particles[m];
-            octx.beginPath();
-            octx.fillStyle = 'rgba(233,210,150,'+pulse+')';
-            octx.arc(pt3.tx,pt3.ty,pt3.size,0,Math.PI*2);
-            octx.fill();
-          }
-          if(he>=holdDuration){
-            revealSite();
-            return;
-          }
-        }
-        requestAnimationFrame(frame);
-      }
-      requestAnimationFrame(frame);
-    }
-
-    if(sourceLogo.complete && sourceLogo.naturalWidth){
-      beginComet(samplePoints());
-    } else {
-      sourceLogo.addEventListener('load', function(){ if(!introCancelled) beginComet(samplePoints()); }, {once:true});
-    }
-  }
-
   if(!reduceMotion){
-    runOpeningSequence();
     window.addEventListener('scroll', revealSite, {passive:true, once:true});
     window.addEventListener('touchstart', revealSite, {passive:true, once:true});
     window.addEventListener('pointerdown', revealSite, {once:true});
     window.addEventListener('keydown', revealSite, {once:true});
-    setTimeout(revealSite, 2400);
+    setTimeout(revealSite, 900);
   } else {
     document.documentElement.classList.add('site-revealed');
+    var heroLogoRM = document.querySelector('.hero-logo');
+    if(heroLogoRM) heroLogoRM.classList.add('settled');
   }
 
   var toggle = document.getElementById('menuToggle');
