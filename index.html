@@ -165,7 +165,6 @@ html.site-revealed .hero{
   transition:opacity .45s ease, transform .45s ease;
 }
 html.site-revealed .hero-group{opacity:1;transform:translateY(0);}
-.hero-group .lang-en{font-size:1.05rem;}
 .hero-logo{
   width:min(360px,78vw);height:auto;margin:0 auto 28px;
   opacity:0;transform:scale(0.94);
@@ -179,7 +178,7 @@ html.site-revealed .hero-logo{opacity:1;}
   transform:scale(1.03);
 }
 .hero-en{
-  font-size:0.78rem;letter-spacing:0.5em;color:var(--gold-light);
+  font-size:clamp(1.1rem,2.6vw,1.5rem);letter-spacing:0.5em;color:var(--gold-light);
   text-transform:uppercase;margin-bottom:18px;
   opacity:0;transform:translateY(16px);
   transition:opacity .45s ease .1s, transform .45s ease .1s;
