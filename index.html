@@ -48,8 +48,8 @@ a{color:var(--gold-light);text-decoration:none;}
 
 /* ---------- language toggle ---------- */
 .lang-en{display:none;}
-html.lang-en .lang-en{display:inline;}
-html.lang-en .lang-ja{display:none;}
+html.lang-en-mode .lang-en{display:inline;}
+html.lang-en-mode .lang-ja{display:none;}
 .lang-toggle{
   background:none;border:1px solid var(--gold-dim);border-radius:20px;
   color:var(--gold-light);font-size:0.72rem;letter-spacing:0.08em;
@@ -757,7 +757,7 @@ nav.links a:active{opacity:0.6;}
 
   function setLang(lang){
     var isEn = lang === 'en';
-    document.documentElement.classList.toggle('lang-en', isEn);
+    document.documentElement.classList.toggle('lang-en-mode', isEn);
     document.documentElement.lang = isEn ? 'en' : 'ja';
     var meta = LANG_META[isEn ? 'en' : 'ja'];
     document.title = meta.title;
@@ -777,7 +777,7 @@ nav.links a:active{opacity:0.6;}
   var langToggleBtn = document.getElementById('langToggle');
   if(langToggleBtn){
     langToggleBtn.addEventListener('click', function(){
-      var toEn = !document.documentElement.classList.contains('lang-en');
+      var toEn = !document.documentElement.classList.contains('lang-en-mode');
       setLang(toEn ? 'en' : 'ja');
       var navLinksEl = document.getElementById('navLinks');
       if(navLinksEl) navLinksEl.classList.remove('open');
