@@ -552,6 +552,35 @@ nav.links a:active{opacity:0.6;}
   position:absolute;width:1px;height:1px;padding:0;margin:-1px;
   overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
 }
+/* ---------- news ---------- */
+#news{padding:70px 24px 30px;text-align:center;}
+.news-eyebrow{
+  display:block;font-family:"Cinzel",serif;font-weight:600;
+  font-size:0.62rem;letter-spacing:0.32em;color:var(--gold-dim);
+  margin-bottom:18px;
+}
+.news-list{list-style:none;max-width:520px;margin:0 auto;text-align:left;}
+.news-list li{
+  display:flex;gap:14px;align-items:baseline;
+  padding:10px 0;border-bottom:1px solid var(--line);
+  font-size:0.82rem;color:var(--ink-dim);
+}
+.news-list li:last-child{border-bottom:none;}
+.news-date{flex-shrink:0;color:var(--gold-dim);font-family:"Cinzel",serif;font-size:0.72rem;}
+.news-list li a{color:var(--ink-dim);}
+.news-list li a:hover{color:var(--gold-light);}
+.news-list li.news-extra{display:none;}
+#news.expanded .news-list li.news-extra{display:flex;}
+.news-more{
+  display:none;margin-top:16px;background:none;border:none;cursor:pointer;
+  color:var(--gold-dim);font-size:0.74rem;letter-spacing:0.06em;
+  font-family:"Noto Serif JP",serif;
+}
+.news-list:has(.news-extra) ~ .news-more{display:inline-block;}
+.news-more:hover{color:var(--gold-light);}
+.news-more .less-label{display:none;}
+#news.expanded .news-more .more-label{display:none;}
+#news.expanded .news-more .less-label{display:inline;}
 </style>
 </head>
 <body>
@@ -619,6 +648,19 @@ nav.links a:active{opacity:0.6;}
       </div>
     </div>
   </div>
+</section>
+
+<!-- 更新情報: 新規項目は先頭(li)に追加。4件目以降は class="news-extra" を付与すると「もっと見る」で表示されます -->
+<section id="news" class="reveal">
+  <span class="news-eyebrow en">NEWS</span>
+  <ul class="news-list">
+    <li><span class="news-date en">2026.11.21</span><a href="#schedule"><span class="lang-ja">「寺尾シルバーフェスタ」の出演情報を追加しました</span><span class="lang-en">Added performance details for the Terao Silver Festa.</span></a></li>
+    <li><span class="news-date en">2026.11.14</span><a href="#schedule"><span class="lang-ja">地域防災訓練イベントの出演情報を追加しました</span><span class="lang-en">Added performance details for the community disaster preparedness drill.</span></a></li>
+  </ul>
+  <button type="button" class="news-more" id="newsMore" aria-expanded="false">
+    <span class="more-label"><span class="lang-ja">＋ もっと見る</span><span class="lang-en">+ Show more</span></span>
+    <span class="less-label"><span class="lang-ja">− 閉じる</span><span class="lang-en">− Show less</span></span>
+  </button>
 </section>
 
 <section id="about" class="reveal">
@@ -1008,6 +1050,16 @@ nav.links a:active{opacity:0.6;}
     document.documentElement.classList.add('site-revealed');
     var heroLogoRM = document.querySelector('.hero-logo');
     if(heroLogoRM) heroLogoRM.classList.add('settled');
+  }
+
+  var newsMoreBtn = document.getElementById('newsMore');
+  if(newsMoreBtn){
+    newsMoreBtn.addEventListener('click', function(){
+      var newsSec = document.getElementById('news');
+      if(!newsSec) return;
+      var expanded = newsSec.classList.toggle('expanded');
+      newsMoreBtn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    });
   }
 
   var toggle = document.getElementById('menuToggle');
