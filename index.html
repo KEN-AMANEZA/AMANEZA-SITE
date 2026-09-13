@@ -378,17 +378,46 @@ section{
 }
 .empty-note{text-align:left;color:var(--ink-dim);font-size:0.85rem;margin-top:26px;max-width:480px;margin-left:auto;margin-right:auto;}
 
-/* ---------- gallery (placeholder) ---------- */
-.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-.gallery-frame{
-  aspect-ratio:1/1;border:1px solid var(--line);
-  display:flex;align-items:center;justify-content:center;
-  color:var(--gold-dim);font-size:1.4rem;
-  background:linear-gradient(150deg,rgba(212,175,55,0.05),transparent);
-  transition:border-color .4s, transform .5s ease;
-  overflow:hidden;
+/* ---------- achievements ---------- */
+.achv-list{list-style:none;max-width:640px;margin:0 auto;}
+.achv-item{border-bottom:1px solid var(--line);}
+.achv-item:last-child{border-bottom:none;}
+.achv-btn{
+  display:flex;align-items:baseline;gap:22px;width:100%;
+  background:none;border:none;cursor:pointer;
+  padding:16px 8px;text-align:left;font:inherit;
+  color:var(--ink);transition:color .3s, padding-left .3s;
 }
-.gallery-frame:hover{border-color:var(--gold-dim);transform:scale(1.03);}
+.achv-btn:hover, .achv-btn:focus-visible{color:var(--gold-light);padding-left:14px;}
+.achv-date{
+  font-family:"Cinzel",serif;color:var(--gold);font-size:0.85rem;
+  letter-spacing:0.05em;flex-shrink:0;min-width:100px;
+}
+.achv-name{font-size:0.95rem;letter-spacing:0.03em;}
+
+.achv-modal{
+  position:fixed;inset:0;z-index:300;
+  display:none;align-items:center;justify-content:center;padding:24px;
+}
+.achv-modal.is-open{display:flex;}
+.achv-modal-backdrop{position:absolute;inset:0;background:rgba(5,5,5,0.86);backdrop-filter:blur(4px);}
+.achv-modal-panel{
+  position:relative;width:100%;max-width:640px;max-height:86vh;overflow-y:auto;
+  background:#0a0a08;border:1px solid var(--gold-dim);
+  padding:40px 32px 32px;box-shadow:0 0 60px rgba(212,175,55,0.14);
+}
+.achv-modal-close{
+  position:absolute;top:14px;right:14px;
+  background:none;border:1px solid var(--gold-dim);border-radius:50%;
+  width:32px;height:32px;color:var(--gold-light);font-size:1.1rem;line-height:1;
+  cursor:pointer;transition:border-color .3s, color .3s;
+}
+.achv-modal-close:hover{border-color:var(--gold);color:var(--white);}
+.achv-modal-date{font-family:"Cinzel",serif;color:var(--gold);font-size:0.78rem;letter-spacing:0.08em;margin-bottom:8px;}
+.achv-modal-title{color:var(--white);font-size:1.15rem;letter-spacing:0.05em;margin-bottom:22px;}
+.achv-modal-photos{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:22px;}
+.achv-modal-photos img{width:100%;aspect-ratio:1/1;object-fit:cover;border:1px solid var(--line);display:block;}
+.achv-modal-text{color:var(--ink-dim);font-size:0.92rem;line-height:1.9;text-align:left;}
 
 /* ---------- video ---------- */
 .video-item{margin-bottom:8px;}
@@ -532,13 +561,13 @@ nav.links a:active{opacity:0.6;}
   .menu-toggle{display:block;}
   nav.links .lang-toggle{margin:14px 22px;}
   section{padding:88px 20px;}
-  .gallery-grid{grid-template-columns:1fr 1fr;}
+  .achv-btn{gap:14px;padding:14px 4px;}
   .schedule-card{flex-direction:column;}
   .schedule-date{width:100%;border-right:none;border-bottom:1px solid var(--line);}
   .btn-request{width:100%;max-width:360px;padding:20px 24px;}
 }
 @media (max-width:420px){
-  .gallery-grid{grid-template-columns:1fr;}
+  .achv-date{min-width:80px;font-size:0.78rem;}
 }
 
 @media (prefers-reduced-motion:reduce){
@@ -613,7 +642,7 @@ nav.links a:active{opacity:0.6;}
     <nav class="links" id="navLinks">
       <a href="#about"><span class="lang-ja">天音座について</span><span class="lang-en">About</span></a>
       <a href="#schedule"><span class="lang-ja">活動予定</span><span class="lang-en">Schedule</span></a>
-      <a href="#gallery"><span class="lang-ja">ギャラリー</span><span class="lang-en">Gallery</span></a>
+      <a href="#achievements"><span class="lang-ja">活動実績</span><span class="lang-en">Achievements</span></a>
       <a href="#video"><span class="lang-ja">動画</span><span class="lang-en">Video</span></a>
       <a href="#contact"><span class="lang-ja">演奏依頼・お問い合わせ</span><span class="lang-en">Booking &amp; Contact</span></a>
       <a href="#sns">SNS</a>
@@ -768,11 +797,13 @@ nav.links a:active{opacity:0.6;}
   <div class="empty-note"><span class="lang-ja">上記以降の予定は、決まり次第このページで随時更新いたします。</span><span class="lang-en">Further schedule updates beyond the above will be posted on this page as they are confirmed.</span></div>
 </section>
 
-<section id="gallery" class="reveal">
-  <span class="eyebrow en">GALLERY</span>
-  <h2 class="title"><span class="lang-ja">ギャラリー</span><span class="lang-en">Gallery</span></h2>
+<section id="achievements" class="reveal">
+  <span class="eyebrow en">ACHIEVEMENTS</span>
+  <h2 class="title"><span class="lang-ja">活動実績</span><span class="lang-en">Achievements</span></h2>
 
-  <div class="section-note" style="margin-top:50px;"><span class="lang-ja">写真は準備中です。活動の様子を随時追加してまいります。</span><span class="lang-en">Photos are coming soon. We will add images of our activities as they become available.</span></div>
+  <ul class="achv-list" id="achvList"></ul>
+
+  <div class="section-note" style="margin-top:50px;"><span class="lang-ja">活動実績は準備中です。今後の出演の様子を、日付とイベント名の一覧としてこちらに追加してまいります。項目をクリックすると、当日の写真や詳しいご紹介をご覧いただけます。</span><span class="lang-en">Our activity records are coming soon. We will list our past performances here by date and event name &mdash; click any entry to view photos and further details.</span></div>
 </section>
 
 <section id="video" class="reveal">
@@ -852,6 +883,17 @@ nav.links a:active{opacity:0.6;}
   <div><span class="lang-ja">太鼓和奏集団　天音座</span><span class="lang-en">AMANEZA Japanese Taiko and Traditional Instrument Ensemble</span></div>
   <p style="margin-top:6px;"><span class="lang-ja">設立 2026年6月／神奈川県横浜市</span><span class="lang-en">Founded June 2026 / Yokohama, Kanagawa</span></p>
 </footer>
+
+<div class="achv-modal" id="achvModal" aria-hidden="true">
+  <div class="achv-modal-backdrop" data-achv-close></div>
+  <div class="achv-modal-panel" role="dialog" aria-modal="true" aria-labelledby="achvModalTitle">
+    <button type="button" class="achv-modal-close" data-achv-close aria-label="閉じる Close">&times;</button>
+    <p class="achv-modal-date" id="achvModalDate"></p>
+    <h3 class="achv-modal-title" id="achvModalTitle"></h3>
+    <div class="achv-modal-photos" id="achvModalPhotos"></div>
+    <div class="achv-modal-text" id="achvModalText"></div>
+  </div>
+</div>
 
 <script>
 (function(){
@@ -1077,6 +1119,53 @@ nav.links a:active{opacity:0.6;}
       if(!newsSec) return;
       var expanded = newsSec.classList.toggle('expanded');
       newsMoreBtn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    });
+  }
+
+  var achvModal = document.getElementById('achvModal');
+  if(achvModal){
+    var achvPhotos = document.getElementById('achvModalPhotos');
+    var achvTitle = document.getElementById('achvModalTitle');
+    var achvDate = document.getElementById('achvModalDate');
+    var achvText = document.getElementById('achvModalText');
+    var achvLastFocus = null;
+
+    var openAchv = function(item){
+      var detail = item.querySelector('.achv-detail');
+      if(!detail) return;
+      var dateEl = item.querySelector('.achv-date');
+      var nameEl = item.querySelector('.achv-name');
+      achvDate.innerHTML = dateEl ? dateEl.innerHTML : '';
+      achvTitle.innerHTML = nameEl ? nameEl.innerHTML : '';
+      var photos = detail.querySelector('.achv-detail-photos');
+      achvPhotos.innerHTML = photos ? photos.innerHTML : '';
+      achvPhotos.style.display = photos ? '' : 'none';
+      var text = detail.querySelector('.achv-detail-text');
+      achvText.innerHTML = text ? text.innerHTML : '';
+      achvLastFocus = document.activeElement;
+      achvModal.classList.add('is-open');
+      achvModal.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+      achvModal.querySelector('.achv-modal-close').focus();
+    };
+    var closeAchv = function(){
+      achvModal.classList.remove('is-open');
+      document.body.style.overflow = '';
+      if(achvLastFocus){ achvLastFocus.focus(); } else if(document.activeElement){ document.activeElement.blur(); }
+      achvModal.setAttribute('aria-hidden','true');
+    };
+    var achvBtns = document.querySelectorAll('.achv-btn');
+    achvBtns.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        openAchv(btn.closest('.achv-item'));
+      });
+    });
+    var achvClosers = achvModal.querySelectorAll('[data-achv-close]');
+    achvClosers.forEach(function(el){
+      el.addEventListener('click', closeAchv);
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && achvModal.classList.contains('is-open')) closeAchv();
     });
   }
 
